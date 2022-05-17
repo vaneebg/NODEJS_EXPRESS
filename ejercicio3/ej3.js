@@ -75,8 +75,18 @@ app.delete('/products/:id', (req, res) => {
         }
     })
     // Crear filtro por precio de producto
-    // Crear filtro que muestre los productos con un precio entre 50 y 250.
-    // Crear un filtro que cuando busque en postman por parámetro el id de un producto me devuelva ese producto
+app.get("/products/por_precio/:precio", (req, res) => {
+
+    const found = items.some((item) => item.precio === +req.params.precio);
+
+    if (found) {
+        res.send(items.filter((item) => item.precio === +req.params.precio));
+    } else {
+        res.status(404).send(`Producto con este precio ${req.params.precio} not found`);
+    }
+});
+// Crear filtro que muestre los productos con un precio entre 50 y 250.
+// Crear un filtro que cuando busque en postman por parámetro el id de un producto me devuelva ese producto
 app.get("/products/:id", (req, res) => {
 
     const found = items.some((item) => item.id === +req.params.id);
