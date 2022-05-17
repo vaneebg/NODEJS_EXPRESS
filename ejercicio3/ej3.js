@@ -31,17 +31,7 @@ app.get("/products", (req, res) => {
 
     res.send(products.items);
 });
-// app.get("/products/:id", (req, res) => {
-//     //con el + delante convertimos una string en un numero
-//     console.log("hola")
-//     const found = items.some((item) => item.id === +req.params.id); // devuelve true o false
-//     console.log(found);
-//     if (found) {
-//         res.send(items.filter((item) => item.id === +req.params.id));
-//     } else {
-//         res.status(404).send(`Member with id ${req.params.id} not found`);
-//     }
-// });
+
 // Crear endpoint para poder crear un producto nuevo
 
 app.post("/products", (req, res) => {
@@ -60,7 +50,7 @@ app.post("/products", (req, res) => {
 });
 // Crear endpoint para poder actualizar un producto
 app.put('/products/:id', (req, res) => {
-        const found = items.some(item => item.id === +req.params.id)
+        const found = items.some(item => item.id === +req.params.id) // devuelve true o false
         if (found) {
             items.forEach(item => {
                 if (+req.params.id === item.id) {
@@ -87,8 +77,28 @@ app.delete('/products/:id', (req, res) => {
     // Crear filtro por precio de producto
     // Crear filtro que muestre los productos con un precio entre 50 y 250.
     // Crear un filtro que cuando busque en postman por parámetro el id de un producto me devuelva ese producto
-    // Crear un filtro que cuando busque en postman por parámetro el nombre de un producto me devuelva ese producto
+app.get("/products/:id", (req, res) => {
 
+    const found = items.some((item) => item.id === +req.params.id);
+
+    if (found) {
+        res.send(items.filter((item) => item.id === +req.params.id));
+    } else {
+        res.status(404).send(`Producto con id ${req.params.id} not found`);
+    }
+});
+// Crear un filtro que cuando busque en postman por parámetro el nombre de un producto me devuelva ese producto
+app.get("/products/por_nombre/:nombre", (req, res) => {
+
+    console.log(typeof req.params.nombre);
+    const found = items.some((item) => item.nombre === req.params.nombre);
+
+    if (found) {
+        res.send(items.filter((item) => item.nombre === req.params.nombre));
+    } else {
+        res.status(404).send(`Producto con nombre ${req.params.nombre} not found`);
+    }
+});
 
 
 
