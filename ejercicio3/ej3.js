@@ -86,6 +86,16 @@ app.get("/products/por_precio/:precio", (req, res) => {
     }
 });
 // Crear filtro que muestre los productos con un precio entre 50 y 250.
+app.get("/products/rango_precio", (req, res) => {
+
+    const found = items.some((item) => item.precio >= 50 && item.precio <= 250);
+
+    if (found) {
+        res.send(items.filter((item) => item.precio >= 50 && item.precio <= 250));
+    } else {
+        res.status(404).send(`Producto con un rango de precio entre 50 y 250 not found`);
+    }
+});
 // Crear un filtro que cuando busque en postman por parámetro el id de un producto me devuelva ese producto
 app.get("/products/:id", (req, res) => {
 
